@@ -30,7 +30,7 @@ composer require californiamountainsnake/longmantelegrambot-inlinemenu
 ```
 
 ## Usage:
-1. Extend your Telegram class from InlineMenuTelegram:
+1. Extend your Telegram class from InlineMenuTelegram (or include the InlineMenuTelegramTrait into your existed Telegram class):
 ```php
 <?php
 // Create your own Telegram class:
@@ -64,7 +64,7 @@ $menu = new Menu('Top root menu', 'root', [
 $menu->buildPathsFromThisRoot();
 ```
 
-3. Extend your standard CallbackqueryCommand from InlineMenuCallbackqueryCommand and realise abstract methods (or include the InlineMenuTelegramTrait into your existed Telegram class):
+3. Extend your standard CallbackqueryCommand from InlineMenuCallbackqueryCommand and realise abstract methods:
 ```php
 <?php
 class CallbackqueryCommand extends InlineMenuCallbackqueryCommand
