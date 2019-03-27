@@ -9,7 +9,7 @@ It's the inline menu for the longman/telegram-bot library!
 
 ## Install:
 ### Require this package with Composer
-Install this package through [Composer][composer].
+Install this package through [Composer](https://getcomposer.org/).
 Edit your project's `composer.json` file to require `californiamountainsnake/longmantelegrambot-inlinemenu`:
 ```json
 {
