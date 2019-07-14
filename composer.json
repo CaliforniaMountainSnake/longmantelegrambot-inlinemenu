@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "php": "^7.3.1",
-        "longman/telegram-bot": "~0.55.1",
+        "php": "^7.2",
+        "longman/telegram-bot": "~0.55",
         "myclabs/php-enum": "~1.5"
     },
     "require-dev": {
