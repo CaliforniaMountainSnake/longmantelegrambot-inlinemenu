@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.0.6] - 2019-07-29
+### Changed
+- The package californiamountainsnake/longmantelegrambot-utils has been updated to the version 1.1.0.
+- Updated Composer dependencies.
+
 ## [1.0.5] - 2019-07-22
 ### Added
 - Added the MenuUtils trait.

@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "201a6d1aab0178a6e5ed870fbed184c6",
+    "content-hash": "f1f73a8ecd1fa5d2abeb8e38e3f53c32",
     "packages": [
         {
             "name": "californiamountainsnake/longmantelegrambot-utils",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils.git",
-                "reference": "8c4157a811286fb1c5daa8d5126cd02fb4793bbd"
+                "reference": "b235a23dce7a5989a0b68e584222e36a545acd26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CaliforniaMountainSnake/longmantelegrambot-utils/zipball/8c4157a811286fb1c5daa8d5126cd02fb4793bbd",
-                "reference": "8c4157a811286fb1c5daa8d5126cd02fb4793bbd",
+                "url": "https://api.github.com/repos/CaliforniaMountainSnake/longmantelegrambot-utils/zipball/b235a23dce7a5989a0b68e584222e36a545acd26",
+                "reference": "b235a23dce7a5989a0b68e584222e36a545acd26",
                 "shasum": ""
             },
             "require": {
@@ -46,7 +46,7 @@
                 }
             ],
             "description": "This is the set of util traits intended for the longman/telegram-bot library!",
-            "time": "2019-07-22T09:00:19+00:00"
+            "time": "2019-07-29T08:11:16+00:00"
         },
         {
             "name": "californiamountainsnake/php-simple-telegram-api",
@@ -754,7 +754,7 @@
         },
         {
             "name": "symfony/process",
-            "version": "v4.3.2",
+            "version": "v4.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
@@ -1481,16 +1481,16 @@
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "3.0.2",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "c4a66b97f040e3e20b3aa2a243230a1c3a9f7c8c"
+                "reference": "e899757bb3df5ff6e95089132f32cd59aac2220a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/c4a66b97f040e3e20b3aa2a243230a1c3a9f7c8c",
-                "reference": "c4a66b97f040e3e20b3aa2a243230a1c3a9f7c8c",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/e899757bb3df5ff6e95089132f32cd59aac2220a",
+                "reference": "e899757bb3df5ff6e95089132f32cd59aac2220a",
                 "shasum": ""
             },
             "require": {
@@ -1503,7 +1503,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev"
+                    "dev-master": "3.1-dev"
                 }
             },
             "autoload": {
@@ -1526,7 +1526,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2019-07-08T05:24:54+00:00"
+            "time": "2019-07-25T05:29:42+00:00"
         },
         {
             "name": "phpunit/phpunit",
