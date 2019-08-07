@@ -13,7 +13,7 @@
         "php": "^7.2",
         "longman/telegram-bot": "~0.55",
         "myclabs/php-enum": "~1.5",
-        "californiamountainsnake/longmantelegrambot-utils": "~1.1.0"
+        "californiamountainsnake/longmantelegrambot-utils": "~1.1.4"
     },
     "require-dev": {
         "ext-dom": "*",

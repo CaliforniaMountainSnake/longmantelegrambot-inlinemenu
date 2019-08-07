@@ -4,25 +4,26 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f1f73a8ecd1fa5d2abeb8e38e3f53c32",
+    "content-hash": "f545efb838555820dd13c0eb6f482d7d",
     "packages": [
         {
             "name": "californiamountainsnake/longmantelegrambot-utils",
-            "version": "1.1.0",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CaliforniaMountainSnake/longmantelegrambot-utils.git",
-                "reference": "b235a23dce7a5989a0b68e584222e36a545acd26"
+                "reference": "2819a4f479e3a569dba8a6d536aedd03eb4b49a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CaliforniaMountainSnake/longmantelegrambot-utils/zipball/b235a23dce7a5989a0b68e584222e36a545acd26",
-                "reference": "b235a23dce7a5989a0b68e584222e36a545acd26",
+                "url": "https://api.github.com/repos/CaliforniaMountainSnake/longmantelegrambot-utils/zipball/2819a4f479e3a569dba8a6d536aedd03eb4b49a3",
+                "reference": "2819a4f479e3a569dba8a6d536aedd03eb4b49a3",
                 "shasum": ""
             },
             "require": {
                 "californiamountainsnake/php-simple-telegram-api": "~1.2.0",
                 "longman/telegram-bot": "~0.59",
+                "myclabs/php-enum": "~1.5",
                 "php": "^7.2"
             },
             "require-dev": {
@@ -46,20 +47,20 @@
                 }
             ],
             "description": "This is the set of util traits intended for the longman/telegram-bot library!",
-            "time": "2019-07-29T08:11:16+00:00"
+            "time": "2019-08-07T11:23:42+00:00"
         },
         {
             "name": "californiamountainsnake/php-simple-telegram-api",
-            "version": "1.2.0",
+            "version": "1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/CaliforniaMountainSnake/php-simple-telegram-api.git",
-                "reference": "d802de441a560a99e1f33450ed6cbb3f64e38e56"
+                "reference": "514180f2a56a30fc44748e8f35807ddd4929c98d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/CaliforniaMountainSnake/php-simple-telegram-api/zipball/d802de441a560a99e1f33450ed6cbb3f64e38e56",
-                "reference": "d802de441a560a99e1f33450ed6cbb3f64e38e56",
+                "url": "https://api.github.com/repos/CaliforniaMountainSnake/php-simple-telegram-api/zipball/514180f2a56a30fc44748e8f35807ddd4929c98d",
+                "reference": "514180f2a56a30fc44748e8f35807ddd4929c98d",
                 "shasum": ""
             },
             "require": {
@@ -91,7 +92,7 @@
                 }
             ],
             "description": "Php realisation of SOME methods of Telegram BOT API.",
-            "time": "2019-07-14T12:52:03+00:00"
+            "time": "2019-08-04T10:10:15+00:00"
         },
         {
             "name": "californiamountainsnake/php-utils",
@@ -696,16 +697,16 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.11.0",
+            "version": "v1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
-                "reference": "82ebae02209c21113908c229e9883c419720738a"
+                "reference": "550ebaac289296ce228a706d0867afc34687e3f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/82ebae02209c21113908c229e9883c419720738a",
-                "reference": "82ebae02209c21113908c229e9883c419720738a",
+                "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/550ebaac289296ce228a706d0867afc34687e3f4",
+                "reference": "550ebaac289296ce228a706d0867afc34687e3f4",
                 "shasum": ""
             },
             "require": {
@@ -717,7 +718,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.11-dev"
+                    "dev-master": "1.12-dev"
                 }
             },
             "autoload": {
@@ -734,12 +735,12 @@
             ],
             "authors": [
                 {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
+                    "name": "Gert de Pagter",
+                    "email": "BackEndTea@gmail.com"
                 },
                 {
-                    "name": "Gert de Pagter",
-                    "email": "backendtea@gmail.com"
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
@@ -750,7 +751,7 @@
                 "polyfill",
                 "portable"
             ],
-            "time": "2019-02-06T07:57:58+00:00"
+            "time": "2019-08-06T08:03:45+00:00"
         },
         {
             "name": "symfony/process",

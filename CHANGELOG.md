@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.0.7] - 2019-08-07
+### Added
+- Added the possibility to specify the chat_id and parse_mode in the MenuUtils::sendTextMessageAndShowMenu() method.
+
 ## [1.0.6] - 2019-07-29
 ### Changed
 - The package californiamountainsnake/longmantelegrambot-utils has been updated to the version 1.1.0.
