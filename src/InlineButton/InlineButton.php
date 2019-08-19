@@ -6,7 +6,6 @@ use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\Enums\CallbackDataTypeE
 use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\Enums\InlineButtonTypeEnum;
 use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\InlineButton\Exceptions\TooLongCallbackDataParameterException;
 use Longman\TelegramBot\Entities\InlineKeyboardButton;
-use Longman\TelegramBot\Exception\TelegramException;
 
 class InlineButton extends CallbackDataEntity
 {
@@ -17,12 +16,19 @@ class InlineButton extends CallbackDataEntity
     /**
      * @var string
      */
-    protected $text;
+    protected $buttonText;
 
-    public function __construct(InlineButtonTypeEnum $_type, string $_text, string $_data)
+    /**
+     * InlineButton constructor.
+     *
+     * @param InlineButtonTypeEnum $_type
+     * @param string               $_button_text
+     * @param array                $_data
+     */
+    public function __construct(InlineButtonTypeEnum $_type, string $_button_text, array $_data)
     {
         parent::__construct($_type, $_data);
-        $this->text = $_text;
+        $this->buttonText = $_button_text;
     }
 
     /**
@@ -31,38 +37,22 @@ class InlineButton extends CallbackDataEntity
      */
     public function getInlineKeyboardArray(): array
     {
-        $params = ['text' => $this->text];
-        $key    = null;
-        $value  = null;
+        $params = ['text' => $this->buttonText];
+        $key = null;
+        $value = null;
 
         switch ((string)$this->type) {
             case CallbackDataTypeEnum::TOAST:
-                $key   = 'callback_data';
-                $value = CallbackDataTypeEnum::TOAST . self::CALLBACK_DATA_DELIMITER . $this->data;
-                $this->checkCallbackDataLength($value);
-                break;
-
             case CallbackDataTypeEnum::START_COMMAND:
-                $key   = 'callback_data';
-                $value = CallbackDataTypeEnum::START_COMMAND . self::CALLBACK_DATA_DELIMITER . $this->data;
-                $this->checkCallbackDataLength($value);
-                break;
-
             case CallbackDataTypeEnum::MENU_SECTION:
-                $key   = 'callback_data';
-                $value = CallbackDataTypeEnum::MENU_SECTION . self::CALLBACK_DATA_DELIMITER . $this->data;
-                $this->checkCallbackDataLength($value);
-                break;
-
-            case CallbackDataTypeEnum::COMMAND_BUTTON:
-                $key   = 'callback_data';
-                $value = CallbackDataTypeEnum::COMMAND_BUTTON . self::CALLBACK_DATA_DELIMITER . $this->data;
-                $this->checkCallbackDataLength($value);
+                $key = 'callback_data';
+                $value = $this->dataToString([(string)$this->type]);
+                $this->assertCallbackDataHaveGoodLength($value);
                 break;
 
             default:
-                $key   = (string)$this->type;
-                $value = $this->data;
+                $key = (string)$this->type;
+                $value = $this->data[0];
                 break;
         }
 
@@ -72,7 +62,6 @@ class InlineButton extends CallbackDataEntity
 
     /**
      * @return InlineKeyboardButton
-     * @throws TelegramException
      * @throws TooLongCallbackDataParameterException
      */
     public function getInlineKeyboardButton(): InlineKeyboardButton
@@ -83,16 +72,17 @@ class InlineButton extends CallbackDataEntity
     /**
      * @return string
      */
-    public function getText(): string
+    public function getButtonText(): string
     {
-        return $this->text;
+        return $this->buttonText;
     }
 
     /**
      * @param string $_callback_data
+     *
      * @throws TooLongCallbackDataParameterException
      */
-    private function checkCallbackDataLength(string $_callback_data): void
+    private function assertCallbackDataHaveGoodLength(string $_callback_data): void
     {
         $len = \strlen($_callback_data);
         if ($len > self::CALLBACK_DATA_MAX_LENGTH) {

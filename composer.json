@@ -11,6 +11,7 @@
     ],
     "require": {
         "php": "^7.2",
+        "ext-mbstring": "*",
         "longman/telegram-bot": "~0.55",
         "myclabs/php-enum": "~1.5",
         "californiamountainsnake/longmantelegrambot-utils": "~1.1.4"

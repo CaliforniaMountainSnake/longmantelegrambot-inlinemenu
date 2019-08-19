@@ -9,6 +9,9 @@ class InlineMenuTelegram extends Telegram
 {
     use InlineMenuTelegramTrait;
 
+    /**
+     * @param Update $_new_update
+     */
     protected function setUpdate(Update $_new_update): void
     {
         $this->update = $_new_update;

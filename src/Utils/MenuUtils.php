@@ -17,12 +17,14 @@ trait MenuUtils
 
     /**
      * Получить объект меню.
+     *
      * @return Menu
      */
     abstract protected function getMenu(): Menu;
 
     /**
      * Получить объект conversation.
+     *
      * @return Conversation|null
      */
     abstract protected function getConversation(): ?Conversation;
@@ -30,8 +32,8 @@ trait MenuUtils
     /**
      * Отправить текстовое сообщение и показать меню.
      *
-     * @param string $_text
-     * @param string|null $_chat_id
+     * @param string             $_text
+     * @param string|null        $_chat_id
      * @param ParseModeEnum|null $_parse_mode
      *
      * @return ServerResponse
@@ -48,8 +50,8 @@ trait MenuUtils
     /**
      * Завершить conversation и отправить сообщение.
      *
-     * @param string $_text
-     * @param string|null $_chat_id
+     * @param string             $_text
+     * @param string|null        $_chat_id
      * @param ParseModeEnum|null $_parse_mode
      *
      * @return ServerResponse
@@ -71,7 +73,6 @@ trait MenuUtils
      * Получить объект клавиатуры с меню.
      *
      * @return InlineKeyboard
-     * @throws TelegramException
      */
     protected function getMenuInlineKeyboard(): InlineKeyboard
     {

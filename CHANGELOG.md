@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.0] - 2019-08-19
+### Added
+- The number of CallbackDataTypeEnum's types has been reduced.
+- The functional of START_COMMAND has been greatly improved. Now it can start command with user's input text. Inline button can fully emulate the regular keyboard's button. The text from the inline button can be sent into the target command like a regular keyboard button has been pressed.
+- Added the possibility to delete the message with the inline keyboard after an inline button has been pressed.
+- There is more qualitative infrastructure of the inline buttons processing.
+### Changed
+- Updated Composer dependencies.
+
 ## [1.0.7] - 2019-08-07
 ### Added
 - Added the possibility to specify the chat_id and parse_mode in the MenuUtils::sendTextMessageAndShowMenu() method.

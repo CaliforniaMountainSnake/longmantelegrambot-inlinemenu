@@ -4,29 +4,42 @@ namespace CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\Telegram;
 
 use Longman\TelegramBot\Entities\CallbackQuery;
 use Longman\TelegramBot\Entities\Update;
-use Longman\TelegramBot\Exception\TelegramException;
 
 /**
- * You must implement only setUpdate(), others abstract method are implemented Telegram class by default.
+ * You must implement only setUpdate(), other abstract methods are implemented by Telegram class by default.
  */
 trait InlineMenuTelegramTrait
 {
+    /**
+     * @param Update $_new_update
+     */
     abstract protected function setUpdate(Update $_new_update): void;
 
+    /**
+     * @param string $command
+     *
+     * @return mixed
+     */
     abstract public function executeCommand(string $command);
 
+    /**
+     * @return mixed
+     */
     abstract public function getBotUsername();
 
+    /**
+     * @return mixed
+     */
     abstract public function getCommandsList();
 
     /**
-     * @param string $_command
+     * @param string        $_command The bot's command.
+     * @param string        $_text    The text which will be sent to the command.
      * @param CallbackQuery $_callback_query
      *
      * @return mixed
-     * @throws TelegramException
      */
-    public function executeCommandFromCallbackquery(string $_command, CallbackQuery $_callback_query)
+    public function executeCommandFromCallbackquery(string $_command, string $_text, CallbackQuery $_callback_query)
     {
         $updateArr = [
             'update_id' => 0,
@@ -34,7 +47,7 @@ trait InlineMenuTelegramTrait
                 'message_id' => 0,
                 'from' => $_callback_query->getFrom()->getRawData(),
                 'date' => \time(),
-                'text' => '',
+                'text' => $_text,
             ]
         ];
         if ($_callback_query->getMessage()) {

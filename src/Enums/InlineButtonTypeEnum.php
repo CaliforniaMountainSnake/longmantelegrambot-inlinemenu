@@ -4,11 +4,11 @@ namespace CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\Enums;
 
 class InlineButtonTypeEnum extends CallbackDataTypeEnum
 {
-    public const URL                              = 'url';
-    public const SWITCH_INLINE_QUERY              = 'switch_inline_query';
+    public const URL = 'url';
+    public const SWITCH_INLINE_QUERY = 'switch_inline_query';
     public const SWITCH_INLINE_QUERY_CURRENT_CHAT = 'switch_inline_query_current_chat';
-    public const CALLBACK_GAME                    = 'callback_game';
-    public const PAY                              = 'pay';
+    public const CALLBACK_GAME = 'callback_game';
+    public const PAY = 'pay';
 
 
     //--------------------------------------------------------------------------

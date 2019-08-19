@@ -3,7 +3,6 @@
 namespace CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\Menu;
 
 use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\Enums\InlineButtonTypeEnum;
-use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\InlineButton\Exceptions\BadCallbackDataFormatException;
 use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\InlineButton\InlineButton;
 use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\Menu\Exceptions\FullPathWasAlreadyBuiltException;
 use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\Menu\Exceptions\FullPathWasNotBuiltException;
@@ -11,7 +10,6 @@ use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\Menu\Exceptions\Unknown
 use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\Utils\PathUtils;
 use Longman\TelegramBot\Entities\InlineKeyboard;
 use Longman\TelegramBot\Entities\InlineKeyboardButton;
-use Longman\TelegramBot\Exception\TelegramException;
 
 class Menu
 {
@@ -31,6 +29,7 @@ class Menu
 
     /**
      * Full path with all parents.
+     *
      * @var string
      */
     protected $fullPath;
@@ -43,24 +42,24 @@ class Menu
     /**
      * MenuSection constructor.
      *
-     * @param string $_text InlineButton text of the menu section.
-     * @param string $_id Menu section path identifier.
-     * @param array $_items Multidimensional array contains InlineKeyboardButton or Menu objects.
+     * @param string $_text  InlineButton text of the menu section.
+     * @param string $_id    Menu section path identifier.
+     * @param array  $_items Multidimensional array contains InlineKeyboardButton or Menu objects.
      *
      * @throws UnknownMenuItemException
      */
     public function __construct(string $_text, string $_id, array $_items)
     {
-        $this->text  = $_text;
-        $this->id    = $_id;
+        $this->text = $_text;
+        $this->id = $_id;
         $this->items = $_items;
-        $this->checkItemsTypes();
+        $this->assertItemsHaveCompatibleTypes();
     }
 
     public function __clone()
     {
         // Clone items' objects.
-        $this->deepWalkThroughChildrenItems(function (&$child, Menu &$parent) {
+        $this->deepWalkThroughChildrenItems(static function (&$child, Menu &$parent) {
             if (\is_object($child)) {
                 $child = clone $child;
             }
@@ -69,7 +68,9 @@ class Menu
 
     /**
      * Make path string using current PATH_DELIMITER.
+     *
      * @param string ...$_ids
+     *
      * @return string
      */
     public static function path(string ...$_ids): string
@@ -87,7 +88,7 @@ class Menu
     public function getInlineKeyboardButtons(): array
     {
         $menu = clone $this;
-        \array_walk_recursive($menu->items, function (&$child) {
+        \array_walk_recursive($menu->items, static function (&$child) {
             if (!($child instanceof self)) {
                 return;
             }
@@ -101,16 +102,15 @@ class Menu
     /**
      * @return InlineKeyboard
      * @throws FullPathWasNotBuiltException
-     * @throws TelegramException
      */
     public function getInlineKeyboard(): InlineKeyboard
     {
         return new InlineKeyboard(...$this->getInlineKeyboardButtons());
     }
 
-
     /**
      * Проложить у дочерних меню абсолютные пути, используя это в качестве корневого.
+     *
      * @throws FullPathWasAlreadyBuiltException
      */
     public function buildPathsFromThisRoot(): void
@@ -120,7 +120,7 @@ class Menu
         }
 
         $this->fullPath = $this->id;
-        $this->deepWalkThroughChildrenItems(function (&$child, Menu &$parent) {
+        $this->deepWalkThroughChildrenItems(static function (&$child, Menu &$parent) {
             if (!($child instanceof Menu)) {
                 return;
             }
@@ -130,6 +130,7 @@ class Menu
 
     /**
      * @param string $_path
+     *
      * @return Menu|null
      * @throws FullPathWasNotBuiltException
      */
@@ -141,7 +142,7 @@ class Menu
         }
 
         $result = null;
-        $this->deepWalkThroughChildrenItems(function (&$child, Menu &$parent) use ($_path, &$result) {
+        $this->deepWalkThroughChildrenItems(static function (&$child, Menu &$parent) use ($_path, &$result) {
             if (!($child instanceof Menu)) {
                 return;
             }
@@ -156,13 +157,14 @@ class Menu
     }
 
     /**
-     * @param Menu $_menu
+     * @param Menu   $_menu
      * @param string $_path
+     *
      * @return Menu|null
      */
     public static function getMenuByPathOld(Menu $_menu, string $_path): ?self
     {
-        $topPath   = self::getTopPath($_path, self::PATH_DELIMITER);
+        $topPath = self::getTopPath($_path, self::PATH_DELIMITER);
         $extraPath = self::deleteFirstPart($_path, self::PATH_DELIMITER);
 
         if ($_menu->id === $_path) {
@@ -178,7 +180,7 @@ class Menu
         // Совпадает верхняя часть пути, продолжаем поиск среди элементов.
         $childrenResult = null;
         \array_walk_recursive($_menu->items,
-            function (&$childMenu) use (&$childrenResult, $extraPath, $_menu) {
+            static function (&$childMenu) use (&$childrenResult, $extraPath) {
                 if (!($childMenu instanceof Menu)) {
                     return;
                 }
@@ -209,6 +211,9 @@ class Menu
         });
     }
 
+    /**
+     * @param Menu $_parent
+     */
     private function injectParentPath(Menu $_parent): void
     {
         $this->fullPath = $_parent->fullPath . self::PATH_DELIMITER . $this->id;
@@ -230,7 +235,7 @@ class Menu
      * @noinspection PhpDocRedundantThrowsInspection
      * @throws UnknownMenuItemException
      */
-    protected function checkItemsTypes(): void
+    protected function assertItemsHaveCompatibleTypes(): void
     {
         \array_walk_recursive($this->items, function (&$value) {
             if ($value instanceof InlineKeyboardButton || $value instanceof self) {
@@ -251,13 +256,12 @@ class Menu
     //------------------------------------------------------------------------------------------------------------------
     /**
      * @return InlineButton
-     * @throws BadCallbackDataFormatException
      * @throws FullPathWasNotBuiltException
      */
     public function getMenuSectionButton(): InlineButton
     {
         $this->checkFullPathWasBuilt();
-        return new InlineButton(InlineButtonTypeEnum::MENU_SECTION(), $this->text, $this->fullPath);
+        return new InlineButton(InlineButtonTypeEnum::MENU_SECTION(), $this->text, [$this->fullPath]);
     }
 
     /**

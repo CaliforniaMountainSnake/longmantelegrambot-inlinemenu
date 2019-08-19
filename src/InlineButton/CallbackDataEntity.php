@@ -9,6 +9,7 @@ use Longman\TelegramBot\Entities\CallbackQuery;
 class CallbackDataEntity
 {
     public const CALLBACK_DATA_DELIMITER = '|';
+    public const DELETE_MESSAGE_MARKER = 'd';
 
     /**
      * @var CallbackDataTypeEnum
@@ -16,7 +17,7 @@ class CallbackDataEntity
     protected $type;
 
     /**
-     * @var string
+     * @var array
      */
     protected $data;
 
@@ -24,26 +25,93 @@ class CallbackDataEntity
      * CallbackDataEntity constructor.
      *
      * @param CallbackDataTypeEnum $_type
-     * @param string $_data
-     *
-     * @throws BadCallbackDataFormatException
+     * @param array                $_data
      */
-    public function __construct(CallbackDataTypeEnum $_type, string $_data)
+    public function __construct(CallbackDataTypeEnum $_type, array $_data)
     {
         $this->type = $_type;
         $this->data = $_data;
-
-        $commandButtonType = CallbackDataTypeEnum::COMMAND_BUTTON;
-        if ((string)$_type === $commandButtonType && self::splitStringByFirstDelimiter($_data) === null) {
-            throw new BadCallbackDataFormatException('The data of the callback_data with type "'
-                . $commandButtonType . '" contains less than 2 elements!');
-        }
     }
 
     public function __clone()
     {
         $this->type = clone $this->type;
     }
+
+    /**
+     * @param CallbackQuery $_callback_query
+     *
+     * @return self
+     * @throws BadCallbackDataFormatException
+     */
+    public static function createFromCallbackQuery(CallbackQuery $_callback_query): self
+    {
+        self::assertCallbackDataHaveGoodFormat($_callback_query);
+        [$typeString, $data] = self::parseTypeAndDataFromRawCallbackData($_callback_query);
+
+        try {
+            $type = new CallbackDataTypeEnum($typeString);
+        } catch (\UnexpectedValueException $e) {
+            $msg = 'Unknown type in the callback_data "' . $typeString . '"! ' . $e->getMessage();
+            throw new BadCallbackDataFormatException($msg, $e->getCode(), $e);
+        }
+
+        return new self($type, $data);
+    }
+
+    /**
+     * @param string $_callback_data
+     *
+     * @return array
+     */
+    protected static function parseDataFromString(string $_callback_data): array
+    {
+        return \explode(self::CALLBACK_DATA_DELIMITER, $_callback_data);
+    }
+
+    /**
+     * @param array $_additional_data
+     *
+     * @return string
+     */
+    protected function dataToString(array $_additional_data = []): string
+    {
+        $merged = \array_merge($_additional_data, $this->data);
+        return \implode(self::CALLBACK_DATA_DELIMITER, $merged);
+    }
+
+    /**
+     * @param CallbackQuery $_callback_query
+     *
+     * @return string[]
+     */
+    private static function parseTypeAndDataFromRawCallbackData(CallbackQuery $_callback_query): array
+    {
+        $exploded = self::parseDataFromString($_callback_query->getData());
+        $typeString = $exploded[0];
+        $data = $exploded;
+        unset ($data[0]);
+        $data = \array_values($data);
+
+        return [$typeString, $data];
+    }
+
+    /**
+     * @param CallbackQuery $_callback_query
+     *
+     * @throws BadCallbackDataFormatException
+     */
+    private static function assertCallbackDataHaveGoodFormat(CallbackQuery $_callback_query): void
+    {
+        $exploded = self::parseDataFromString($_callback_query->getData());
+        if (\count($exploded) < 2) {
+            throw new BadCallbackDataFormatException('The callback_data contains less than 2 elements!');
+        }
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+    // Getters.
+    //------------------------------------------------------------------------------------------------------------------
 
     /**
      * @return CallbackDataTypeEnum
@@ -54,96 +122,10 @@ class CallbackDataEntity
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getData(): string
+    public function getData(): array
     {
         return $this->data;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getExtraDataPart1(): ?string
-    {
-        $extra = $this->getExtraData();
-        if ($extra === null) {
-            return null;
-        }
-
-        [$part1, $part2] = $extra;
-        return $part1;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getExtraDataPart2(): ?string
-    {
-        $extra = $this->getExtraData();
-        if ($extra === null) {
-            return null;
-        }
-
-        [$part1, $part2] = $extra;
-        return $part2;
-    }
-
-    /**
-     * @param CallbackQuery $_callback_query
-     *
-     * @return self
-     * @throws BadCallbackDataFormatException
-     */
-    public static function fromCallbackQuery(CallbackQuery $_callback_query): self
-    {
-        $split = self::splitStringByFirstDelimiter($_callback_query->getData());
-        if ($split === null) {
-            throw new BadCallbackDataFormatException('The callback_data contains less than 2 elements!');
-        }
-        [$typeString, $data] = $split;
-
-        try {
-            $type = new CallbackDataTypeEnum($typeString);
-        } catch (\UnexpectedValueException $e) {
-            throw new BadCallbackDataFormatException('Unknown type in the callback_data! '
-                . $e->getMessage(), $e->getCode(), $e);
-        }
-
-        return new self($type, $data);
-    }
-
-    /**
-     * Разделить данные согласно первому встреченному разделителю.
-     * Если в данных нет разделителя, вернуть null.
-     *
-     * @param string $_data
-     * @return array|null
-     */
-    protected static function splitStringByFirstDelimiter(string $_data): ?array
-    {
-        $exploded = \explode(self::CALLBACK_DATA_DELIMITER, $_data);
-        if (\count($exploded) < 2) {
-            return null;
-        }
-
-        $data1 = $exploded[0];
-        unset ($exploded[0]);
-        $data2 = \implode(self::CALLBACK_DATA_DELIMITER, $exploded);
-
-        return [$data1, $data2];
-    }
-
-    /**
-     * @return array|null
-     */
-    protected function getExtraData(): ?array
-    {
-        $split = self::splitStringByFirstDelimiter($this->getData());
-        if ($split === null) {
-            return null;
-        }
-
-        return $split;
     }
 }

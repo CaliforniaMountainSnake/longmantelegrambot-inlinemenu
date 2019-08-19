@@ -2,21 +2,17 @@
 
 namespace Tests\Unit;
 
-use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\InlineButton\Exceptions\BadCallbackDataFormatException;
 use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\InlineButton\Exceptions\TooLongCallbackDataParameterException;
 use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\InlineButton\InlineButton;
 use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\Menu\Exceptions\FullPathWasAlreadyBuiltException;
 use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\Menu\Exceptions\FullPathWasNotBuiltException;
 use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\Menu\Exceptions\UnknownMenuItemException;
 use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\Menu\Menu;
-use Longman\TelegramBot\Exception\TelegramException;
 use PHPUnit\Framework\TestCase;
 
 class MenuTest extends TestCase
 {
     /**
-     * @throws BadCallbackDataFormatException
-     * @throws TelegramException
      * @throws TooLongCallbackDataParameterException
      * @throws UnknownMenuItemException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
@@ -29,11 +25,9 @@ class MenuTest extends TestCase
     }
 
     /**
-     * @throws BadCallbackDataFormatException
-     * @throws TelegramException
+     * @throws FullPathWasNotBuiltException
      * @throws TooLongCallbackDataParameterException
      * @throws UnknownMenuItemException
-     * @throws FullPathWasNotBuiltException
      */
     public function testFullPathWasNotBuiltFindMenuByPath(): void
     {
@@ -44,9 +38,7 @@ class MenuTest extends TestCase
     }
 
     /**
-     * @throws BadCallbackDataFormatException
      * @throws FullPathWasNotBuiltException
-     * @throws TelegramException
      * @throws TooLongCallbackDataParameterException
      * @throws UnknownMenuItemException
      */
@@ -59,9 +51,7 @@ class MenuTest extends TestCase
     }
 
     /**
-     * @throws BadCallbackDataFormatException
      * @throws FullPathWasNotBuiltException
-     * @throws TelegramException
      * @throws TooLongCallbackDataParameterException
      * @throws UnknownMenuItemException
      */
@@ -74,11 +64,9 @@ class MenuTest extends TestCase
     }
 
     /**
-     * @throws BadCallbackDataFormatException
-     * @throws TelegramException
+     * @throws FullPathWasAlreadyBuiltException
      * @throws TooLongCallbackDataParameterException
      * @throws UnknownMenuItemException
-     * @throws FullPathWasAlreadyBuiltException
      */
     public function testFullPathWasAlreadyBuilt(): void
     {
@@ -90,10 +78,8 @@ class MenuTest extends TestCase
     }
 
     /**
-     * @throws BadCallbackDataFormatException
      * @throws FullPathWasAlreadyBuiltException
      * @throws FullPathWasNotBuiltException
-     * @throws TelegramException
      * @throws TooLongCallbackDataParameterException
      * @throws UnknownMenuItemException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
@@ -105,17 +91,17 @@ class MenuTest extends TestCase
 
         $menuTarget01 = $menu->findMenuByPath(Menu::path('/'));
         $menuTarget02 = $menu->findMenuByPath(Menu::path(''));
-        $menuTarget1  = $menu->findMenuByPath(Menu::path('root'));
-        $menuTarget2  = $menu->findMenuByPath(Menu::path('root', 'section_a', 'section_c'));
-        $menuTarget3  = $menu->findMenuByPath(Menu::path('root', 'section_a', 'section_c', 'section_c'));
-        $menuTarget4  = $menu->findMenuByPath(Menu::path('unknown_path'));
-        $menuTarget5  = $menu->findMenuByPath(Menu::path('root', 'unknown_section'));
+        $menuTarget1 = $menu->findMenuByPath(Menu::path('root'));
+        $menuTarget2 = $menu->findMenuByPath(Menu::path('root', 'section_a', 'section_c'));
+        $menuTarget3 = $menu->findMenuByPath(Menu::path('root', 'section_a', 'section_c', 'section_c'));
+        $menuTarget4 = $menu->findMenuByPath(Menu::path('unknown_path'));
+        $menuTarget5 = $menu->findMenuByPath(Menu::path('root', 'unknown_section'));
 
         $this->assertNull($menuTarget01);
         $this->assertNull($menuTarget02);
-        $this->assertEquals($menuTarget1->getMenuSectionButton()->getText(), 'Top root menu');
-        $this->assertEquals($menuTarget2->getMenuSectionButton()->getText(), 'Section C 1');
-        $this->assertEquals($menuTarget3->getMenuSectionButton()->getText(), 'Section C 2');
+        $this->assertEquals($menuTarget1->getMenuSectionButton()->getButtonText(), 'Top root menu');
+        $this->assertEquals($menuTarget2->getMenuSectionButton()->getButtonText(), 'Section C 1');
+        $this->assertEquals($menuTarget3->getMenuSectionButton()->getButtonText(), 'Section C 2');
         $this->assertNull($menuTarget4);
         $this->assertNull($menuTarget5);
     }
@@ -125,8 +111,6 @@ class MenuTest extends TestCase
     /**
      * @return Menu
      *
-     * @throws BadCallbackDataFormatException
-     * @throws TelegramException
      * @throws TooLongCallbackDataParameterException
      * @throws UnknownMenuItemException
      */
@@ -165,8 +149,6 @@ class MenuTest extends TestCase
 
     /**
      * @return Menu
-     * @throws BadCallbackDataFormatException
-     * @throws TelegramException
      * @throws TooLongCallbackDataParameterException
      * @throws UnknownMenuItemException
      */

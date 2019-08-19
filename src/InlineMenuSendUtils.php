@@ -12,6 +12,7 @@ trait InlineMenuSendUtils
 {
     /**
      * From docs: Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters.
+     *
      * @return int
      */
     protected function getToastMaxLength(): int
@@ -19,6 +20,14 @@ trait InlineMenuSendUtils
         return 200;
     }
 
+    /**
+     * @param CallbackQuery $_callback_query
+     * @param string        $_text
+     * @param bool          $_show_alert
+     * @param int           $_cache_time
+     *
+     * @return ServerResponse
+     */
     public function answerToast(
         CallbackQuery $_callback_query,
         string $_text,
@@ -35,6 +44,7 @@ trait InlineMenuSendUtils
 
     /**
      * @param CallbackQuery $_callback_query
+     *
      * @return ServerResponse
      */
     protected function answerEmpty(CallbackQuery $_callback_query): ServerResponse
@@ -44,12 +54,33 @@ trait InlineMenuSendUtils
         ]);
     }
 
+    /**
+     * @param Message        $_message
+     * @param InlineKeyboard $_keyboard
+     *
+     * @return ServerResponse
+     */
     protected function editMessageKeyboard(Message $_message, InlineKeyboard $_keyboard): ServerResponse
     {
         return Request::editMessageReplyMarkup([
             'chat_id' => $_message->getChat()->getId(),
             'message_id' => $_message->getMessageId(),
             'reply_markup' => $_keyboard,
+        ]);
+    }
+
+    /**
+     * Use this method to delete a message, including service messages, with certain limitations.
+     *
+     * @param Message $_message
+     *
+     * @return ServerResponse
+     */
+    protected function deleteMessage(Message $_message): ServerResponse
+    {
+        return Request::deleteMessage([
+            'chat_id' => $_message->getChat()->getId(),
+            'message_id' => $_message->getMessageId(),
         ]);
     }
 }
