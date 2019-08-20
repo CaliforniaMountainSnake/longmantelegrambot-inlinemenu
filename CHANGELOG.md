@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.1] - 2019-08-20
+### Changed
+- The InlineButtonHelpers::buttonsArray() has been improved.
+
 ## [1.1.0] - 2019-08-19
 ### Added
 - The number of CallbackDataTypeEnum's types has been reduced.
