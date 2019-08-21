@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.2] - 2019-08-21
+### Changed
+- The InlineButtonHelpers::buttonsArray() now sends the array's keys to a command and uses the array's values as the visible button text.
+
 ## [1.1.1] - 2019-08-20
 ### Changed
 - The InlineButtonHelpers::buttonsArray() has been improved.

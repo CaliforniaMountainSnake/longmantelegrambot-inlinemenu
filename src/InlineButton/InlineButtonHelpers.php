@@ -90,8 +90,8 @@ trait InlineButtonHelpers
      *
      * @param string $_command_name   The name of the command which will be executed.
      * @param array  $_buttons        The array with keyboard buttons' string labels.
-     *                                The array values will be visible button's text,
-     *                                the array keys (if it is associative array) will be sent to the command.
+     *                                The array keys will be sent to the command.
+     *                                The array values will used as the visible button's text.
      * @param bool   $_delete_message Delete the message with the inline keyboard after command execution?
      *
      * @return InlineKeyboard
@@ -103,7 +103,7 @@ trait InlineButtonHelpers
     ): InlineKeyboard {
         \array_walk_recursive($_buttons, static function (&$value, &$key) use ($_command_name, $_delete_message) {
             $visibleText = $value;
-            $realText = (\is_string($key) ? $key : $value);
+            $realText = $key;
             $value = self::startCommand($visibleText, $_command_name, $realText, $_delete_message);
         });
 
