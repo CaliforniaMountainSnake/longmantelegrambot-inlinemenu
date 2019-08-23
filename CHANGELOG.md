@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.3] - 2019-08-23
+### Fixed
+- Fix the bug. InlineButtonHelpers::buttonsArray() now can unpack the associative arrays.
+
 ## [1.1.2] - 2019-08-21
 ### Changed
 - The InlineButtonHelpers::buttonsArray() now sends the array's keys to a command and uses the array's values as the visible button text.

@@ -107,7 +107,7 @@ trait InlineButtonHelpers
             $value = self::startCommand($visibleText, $_command_name, $realText, $_delete_message);
         });
 
-        return new InlineKeyboard(...$_buttons);
+        return new InlineKeyboard(...\array_values($_buttons));
     }
 
     /**
