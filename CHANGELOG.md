@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.4] - 2019-08-29
+### Changed
+- ! The signature of methods MenuUtils::sendTextMessageAndShowMenu() and MenuUtils::sendFatalError() have been changed!
+
 ## [1.1.3] - 2019-08-23
 ### Fixed
 - Fix the bug. InlineButtonHelpers::buttonsArray() now can unpack the associative arrays.

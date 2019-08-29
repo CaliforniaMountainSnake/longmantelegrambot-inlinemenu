@@ -16,23 +16,24 @@ trait MenuUtils
     use SendUtils;
 
     /**
-     * Получить объект меню.
+     * Get menu object.
      *
      * @return Menu
      */
     abstract protected function getMenu(): Menu;
 
     /**
-     * Получить объект conversation.
+     * Get conversation object.
      *
      * @return Conversation|null
      */
     abstract protected function getConversation(): ?Conversation;
 
     /**
-     * Отправить текстовое сообщение и показать меню.
+     * Send text message and show the menu.
      *
      * @param string             $_text
+     * @param array|null         $_errors
      * @param string|null        $_chat_id
      * @param ParseModeEnum|null $_parse_mode
      *
@@ -41,16 +42,18 @@ trait MenuUtils
      */
     protected function sendTextMessageAndShowMenu(
         string $_text,
+        ?array $_errors = null,
         ?string $_chat_id = null,
         ?ParseModeEnum $_parse_mode = null
     ): ServerResponse {
-        return $this->sendTextMessage($_text, null, $this->getMenuInlineKeyboard(), $_chat_id, $_parse_mode);
+        return $this->sendTextMessage($_text, $_errors, $this->getMenuInlineKeyboard(), $_chat_id, $_parse_mode);
     }
 
     /**
-     * Завершить conversation и отправить сообщение.
+     * Stop active conversation and send message.
      *
      * @param string             $_text
+     * @param array|null         $_errors
      * @param string|null        $_chat_id
      * @param ParseModeEnum|null $_parse_mode
      *
@@ -59,6 +62,7 @@ trait MenuUtils
      */
     protected function sendFatalError(
         string $_text,
+        ?array $_errors = null,
         ?string $_chat_id = null,
         ?ParseModeEnum $_parse_mode = null
     ): ServerResponse {
@@ -66,11 +70,11 @@ trait MenuUtils
         if ($conversation !== null) {
             $conversation->stop();
         }
-        return $this->sendTextMessageAndShowMenu($_text, $_chat_id, $_parse_mode);
+        return $this->sendTextMessageAndShowMenu($_text, $_errors, $_chat_id, $_parse_mode);
     }
 
     /**
-     * Получить объект клавиатуры с меню.
+     * Get the object with the inline keyboard.
      *
      * @return InlineKeyboard
      */
