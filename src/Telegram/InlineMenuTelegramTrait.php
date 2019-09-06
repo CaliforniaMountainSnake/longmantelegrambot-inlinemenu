@@ -3,6 +3,7 @@
 namespace CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\Telegram;
 
 use Longman\TelegramBot\Entities\CallbackQuery;
+use Longman\TelegramBot\Entities\Message;
 use Longman\TelegramBot\Entities\Update;
 
 /**
@@ -53,6 +54,30 @@ trait InlineMenuTelegramTrait
         if ($_callback_query->getMessage()) {
             $updateArr['message']['chat'] = $_callback_query->getMessage()->getChat()->getRawData();
         }
+
+        $this->setUpdate(new Update($updateArr, $this->getBotUsername()));
+        return $this->executeCommand($_command);
+    }
+
+    /**
+     * @param string  $_command
+     * @param string  $_text
+     * @param Message $_message
+     *
+     * @return mixed
+     */
+    public function executeCommandWithText(string $_command, string $_text, Message $_message)
+    {
+        $updateArr = [
+            'update_id' => 0,
+            'message' => [
+                'message_id' => 0,
+                'from' => $_message->getFrom()->getRawData(),
+                'chat' => $_message->getChat()->getRawData(),
+                'date' => \time(),
+                'text' => $_text,
+            ]
+        ];
 
         $this->setUpdate(new Update($updateArr, $this->getBotUsername()));
         return $this->executeCommand($_command);

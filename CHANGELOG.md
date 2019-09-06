@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.5] - 2019-09-06
+### Added
+- Added the method InlineMenuTelegramTrait::executeCommandWithText() that can execute any command and pass a text into it.
+
 ## [1.1.4] - 2019-08-29
 ### Changed
 - ! The signature of methods MenuUtils::sendTextMessageAndShowMenu() and MenuUtils::sendFatalError() have been changed!
