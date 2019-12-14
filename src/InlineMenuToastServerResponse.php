@@ -16,38 +16,66 @@ class InlineMenuToastServerResponse extends ServerResponse
     protected $toastMsg;
 
     /**
+     * @var bool
+     */
+    protected $isShowAlert;
+
+    /**
+     * @var int
+     */
+    protected $cacheTime;
+
+    /**
      * InlineMenuToastServerResponse constructor.
      *
-     * @param array  $data
-     * @param        $bot_username
-     * @param string $_toast_message
+     * @param array             $data
+     * @param string|mixed|null $bot_username
+     * @param string            $_toast_message
+     * @param bool              $_is_show_alert
+     * @param int               $_cache_time
      */
-    public function __construct(array $data, $bot_username, string $_toast_message)
-    {
+    public function __construct(
+        array $data,
+        $bot_username,
+        string $_toast_message,
+        bool $_is_show_alert = false,
+        int $_cache_time = 5
+    ) {
         $this->toastMsg = $_toast_message;
+        $this->isShowAlert = $_is_show_alert;
+        $this->cacheTime = $_cache_time;
         parent::__construct($data, $bot_username);
     }
 
     /**
      * @param ServerResponse $_response
      * @param string         $_toast_message
+     * @param bool           $_is_show_alert
+     * @param int            $_cache_time
      *
      * @return InlineMenuToastServerResponse
      */
-    public static function fromServerResponse(ServerResponse $_response, string $_toast_message): self
-    {
+    public static function fromServerResponse(
+        ServerResponse $_response,
+        string $_toast_message,
+        bool $_is_show_alert = false,
+        int $_cache_time = 5
+    ): self {
         /** @noinspection PhpUndefinedFieldInspection */
-        return new self($_response->bot_username, $_response->raw_data, $_toast_message);
+        return new self($_response->bot_username, $_response->raw_data, $_toast_message, $_is_show_alert, $_cache_time);
     }
 
     /**
      * @param string $_toast_message
+     * @param bool   $_is_show_alert
+     * @param int    $_cache_time
      *
      * @return InlineMenuToastServerResponse
      */
-    public static function toast(string $_toast_message): self
+    public static function toast(string $_toast_message, bool $_is_show_alert = false, int $_cache_time = 5): self
     {
-        return new self(['ok' => true, 'result' => true], null, $_toast_message);
+        return new self(['ok' => true, 'result' => true], null,
+            $_toast_message, $_is_show_alert, $_cache_time);
     }
 
     /**
@@ -56,5 +84,21 @@ class InlineMenuToastServerResponse extends ServerResponse
     public function getToastMsg(): string
     {
         return $this->toastMsg;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShowAlert(): bool
+    {
+        return $this->isShowAlert;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCacheTime(): int
+    {
+        return $this->cacheTime;
     }
 }

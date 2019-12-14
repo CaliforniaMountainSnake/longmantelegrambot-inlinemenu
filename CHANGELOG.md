@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.7] - 2019-12-14
+### Added
+- InlineMenuToastServerResponse works and has been improved!
+
 ## [1.1.6] - 2019-12-14
 ### Added
 - Added the experimental support to show toast when command has been started via inline button.

@@ -111,7 +111,8 @@ abstract class InlineMenuCallbackqueryCommand extends SystemCommand
         // Execute command.
         $resultObject = $this->telegram->executeCommandFromCallbackquery($command, $commandText, $_callback_query);
         if ($resultObject instanceof InlineMenuToastServerResponse) {
-            return $this->answerToast($_callback_query, $resultObject->getToastMsg());
+            return $this->answerToast($_callback_query, $resultObject->getToastMsg(), $resultObject->isShowAlert(),
+                $resultObject->getCacheTime());
         }
 
         return $this->answerEmpty($_callback_query);
