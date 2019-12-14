@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.1.6] - 2019-12-14
+### Added
+- Added the experimental support to show toast when command has been started via inline button.
+### Changed
+- Composer dependencies have been updated.
+
 ## [1.1.5] - 2019-09-06
 ### Added
 - Added the method InlineMenuTelegramTrait::executeCommandWithText() that can execute any command and pass a text into it.

@@ -109,7 +109,11 @@ abstract class InlineMenuCallbackqueryCommand extends SystemCommand
         $isDeleteMessage && $this->deleteMessage($_callback_query->getMessage());
 
         // Execute command.
-        $this->telegram->executeCommandFromCallbackquery($command, $commandText, $_callback_query);
+        $resultObject = $this->telegram->executeCommandFromCallbackquery($command, $commandText, $_callback_query);
+        if ($resultObject instanceof InlineMenuToastServerResponse) {
+            return $this->answerToast($_callback_query, $resultObject->getToastMsg());
+        }
+
         return $this->answerEmpty($_callback_query);
     }
 
