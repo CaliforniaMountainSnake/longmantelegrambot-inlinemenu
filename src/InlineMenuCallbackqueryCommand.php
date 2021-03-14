@@ -56,7 +56,7 @@ abstract class InlineMenuCallbackqueryCommand extends SystemCommand
         // Detect query type.
         try {
             $query = CallbackDataEntity::createFromCallbackQuery($callback_query);
-            $this->getInlineMenuLogger()->debug(get_class(CallbackDataEntity::class), $query->toArray());
+            $this->getInlineMenuLogger()->debug(CallbackDataEntity::class, $query->toArray());
         } catch (BadCallbackDataFormatException $e) {
             return $this->answerToast($callback_query, $e->getMessage());
         }

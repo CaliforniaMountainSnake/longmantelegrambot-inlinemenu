@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.2.1] - 2021-03-14
+### Fixed
+- Logger fix in the InlineMenuCallbackqueryCommand.
+
 ## [1.2.0] - 2021-03-14
 ### Added
 - InlineMenuLogger trait.
