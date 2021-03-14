@@ -1,38 +1,39 @@
 {
-    "name": "californiamountainsnake/longmantelegrambot-inlinemenu",
-    "type": "library",
-    "description": "The inline menu for the longman/telegram-bot library!",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "CaliforniaMountainSnake",
-            "email": "CaliforniaMountainSnake1@yandex.ru"
-        }
-    ],
-    "require": {
-        "php": "^7.2",
-        "ext-mbstring": "*",
-        "longman/telegram-bot": "~0.55",
-        "myclabs/php-enum": "~1.5",
-        "californiamountainsnake/longmantelegrambot-utils": "~1.1.4"
-    },
-    "require-dev": {
-        "ext-dom": "*",
-        "phpunit/phpunit": "^7.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "CaliforniaMountainSnake\\LongmanTelegrambotInlinemenu\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        }
-    },
-    "scripts": {
-        "test": [
-            "\"vendor/bin/phpunit\""
-        ]
+  "name": "californiamountainsnake/longmantelegrambot-inlinemenu",
+  "type": "library",
+  "description": "The inline menu for the longman/telegram-bot library!",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "CaliforniaMountainSnake",
+      "email": "CaliforniaMountainSnake1@yandex.ru"
     }
+  ],
+  "require": {
+    "php": "^7.2",
+    "ext-mbstring": "*",
+    "ext-json": "*",
+    "longman/telegram-bot": "~0.55",
+    "myclabs/php-enum": "^1.5",
+    "californiamountainsnake/longmantelegrambot-utils": "^1.1.4"
+  },
+  "require-dev": {
+    "ext-dom": "*",
+    "phpunit/phpunit": "^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "CaliforniaMountainSnake\\LongmanTelegrambotInlinemenu\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": [
+      "\"vendor/bin/phpunit\""
+    ]
+  }
 }

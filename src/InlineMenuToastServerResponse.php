@@ -28,15 +28,15 @@ class InlineMenuToastServerResponse extends ServerResponse
     /**
      * InlineMenuToastServerResponse constructor.
      *
-     * @param array             $data
-     * @param string|mixed|null $bot_username
-     * @param string            $_toast_message
-     * @param bool              $_is_show_alert
-     * @param int               $_cache_time
+     * @param array  $data
+     * @param string $bot_username
+     * @param string $_toast_message
+     * @param bool   $_is_show_alert
+     * @param int    $_cache_time
      */
     public function __construct(
         array $data,
-        $bot_username,
+        string $bot_username,
         string $_toast_message,
         bool $_is_show_alert = false,
         int $_cache_time = 5

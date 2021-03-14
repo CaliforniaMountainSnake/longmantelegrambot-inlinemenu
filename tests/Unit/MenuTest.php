@@ -21,7 +21,7 @@ class MenuTest extends TestCase
     {
         $menu1 = $this->createTestMenu();
         $menu2 = clone $menu1;
-        $this->assertInstanceOf(Menu::class, $menu2);
+        self::assertInstanceOf(Menu::class, $menu2);
     }
 
     /**
@@ -97,13 +97,13 @@ class MenuTest extends TestCase
         $menuTarget4 = $menu->findMenuByPath(Menu::path('unknown_path'));
         $menuTarget5 = $menu->findMenuByPath(Menu::path('root', 'unknown_section'));
 
-        $this->assertNull($menuTarget01);
-        $this->assertNull($menuTarget02);
-        $this->assertEquals($menuTarget1->getMenuSectionButton()->getButtonText(), 'Top root menu');
-        $this->assertEquals($menuTarget2->getMenuSectionButton()->getButtonText(), 'Section C 1');
-        $this->assertEquals($menuTarget3->getMenuSectionButton()->getButtonText(), 'Section C 2');
-        $this->assertNull($menuTarget4);
-        $this->assertNull($menuTarget5);
+        self::assertNull($menuTarget01);
+        self::assertNull($menuTarget02);
+        self::assertEquals('Top root menu', $menuTarget1->getMenuSectionButton()->getButtonText());
+        self::assertEquals('Section C 1', $menuTarget2->getMenuSectionButton()->getButtonText());
+        self::assertEquals('Section C 2', $menuTarget3->getMenuSectionButton()->getButtonText());
+        self::assertNull($menuTarget4);
+        self::assertNull($menuTarget5);
     }
 
     //------------------------------------------------------------------------------------------------------------------

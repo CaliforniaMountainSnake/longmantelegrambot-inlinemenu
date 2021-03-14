@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.2.0] - 2021-03-14
+### Added
+- InlineMenuLogger trait.
+- InlineMenuTelegramTrait::setCommandsPaths() method.
+### Fixed
+- A new modern way to execute commands in the InlineMenuTelegramTrait.
+- Some fixes in the MenuTest.
+
 ## [1.1.7] - 2019-12-14
 ### Added
 - InlineMenuToastServerResponse works and has been improved!

@@ -8,14 +8,17 @@ use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\InlineButton\Exceptions
 use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\Menu\Exceptions\FullPathWasNotBuiltException;
 use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\Menu\Menu;
 use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\Telegram\InlineMenuTelegramTrait;
+use CaliforniaMountainSnake\LongmanTelegrambotInlinemenu\Utils\InlineMenuLogger;
 use Longman\TelegramBot\Commands\SystemCommand;
 use Longman\TelegramBot\Entities\CallbackQuery;
 use Longman\TelegramBot\Entities\InlineKeyboard;
 use Longman\TelegramBot\Entities\ServerResponse;
+use Longman\TelegramBot\Exception\TelegramException;
 
 abstract class InlineMenuCallbackqueryCommand extends SystemCommand
 {
     use InlineMenuSendUtils;
+    use InlineMenuLogger;
 
     /**
      * @var InlineMenuTelegramTrait
@@ -40,14 +43,20 @@ abstract class InlineMenuCallbackqueryCommand extends SystemCommand
     /**
      * @return ServerResponse
      * @throws FullPathWasNotBuiltException
+     * @throws TelegramException
      */
     public function execute(): ServerResponse
     {
         $callback_query = $this->getCallbackQuery();
+        $this->getInlineMenuLogger()
+            ->debug('Incoming CallbackQuery. Raw object', $callback_query->getRawData());
+        $this->getInlineMenuLogger()
+            ->info('Incoming CallbackQuery. Raw data: "' . $callback_query->getData() . '"');
 
         // Detect query type.
         try {
             $query = CallbackDataEntity::createFromCallbackQuery($callback_query);
+            $this->getInlineMenuLogger()->debug(get_class(CallbackDataEntity::class), $query->toArray());
         } catch (BadCallbackDataFormatException $e) {
             return $this->answerToast($callback_query, $e->getMessage());
         }
@@ -76,7 +85,9 @@ abstract class InlineMenuCallbackqueryCommand extends SystemCommand
      */
     protected function processDefault(CallbackDataEntity $_query, CallbackQuery $_callback_query): ServerResponse
     {
-        return $this->answerToast($_callback_query, 'Unknown callback type!');
+        $msg = 'Unknown callback type: "' . $_query->getType() . '"!';
+        $this->getInlineMenuLogger()->warning($msg);
+        return $this->answerToast($_callback_query, $msg);
     }
 
     /**
@@ -96,6 +107,7 @@ abstract class InlineMenuCallbackqueryCommand extends SystemCommand
      * @param CallbackQuery      $_callback_query
      *
      * @return ServerResponse
+     * @throws TelegramException
      */
     protected function processStartCommand(
         CallbackDataEntity $_query,
@@ -132,7 +144,9 @@ abstract class InlineMenuCallbackqueryCommand extends SystemCommand
 
         $childMenu = $rootMenu->findMenuByPath($path);
         if ($childMenu === null) {
-            return $this->answerToast($_callback_query, 'Undefined menu path "' . $path . '"!');
+            $msg = 'Undefined menu path: "' . $path . '"!';
+            $this->getInlineMenuLogger()->error($msg);
+            return $this->answerToast($_callback_query, $msg);
         }
 
         $buttons = $childMenu->getInlineKeyboardButtons();

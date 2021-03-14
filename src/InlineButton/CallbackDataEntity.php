@@ -39,6 +39,25 @@ class CallbackDataEntity
     }
 
     /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'type' => (string)$this->type,
+            'data' => $this->data,
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function __debugInfo(): array
+    {
+        return $this->toArray();
+    }
+
+    /**
      * @param CallbackQuery $_callback_query
      *
      * @return self
