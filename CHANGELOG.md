@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Security
 
 
+## [1.3.0] - 2021-03-15
+### Changed
+- A better way to run commands.
+
 ## [1.2.1] - 2021-03-14
 ### Fixed
 - Logger fix in the InlineMenuCallbackqueryCommand.

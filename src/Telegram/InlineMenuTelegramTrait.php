@@ -8,6 +8,7 @@ use Longman\TelegramBot\Entities\CallbackQuery;
 use Longman\TelegramBot\Entities\Message;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Entities\Update;
+use Longman\TelegramBot\Entities\User;
 use Longman\TelegramBot\Exception\TelegramException;
 
 /**
@@ -62,15 +63,17 @@ trait InlineMenuTelegramTrait
         CallbackQuery $_callback_query
     ): ?ServerResponse {
         // In a callback_query "message->from" entity will have the bot itself data.
-        // So, we need to copy userId from the "chat" entity.
-        return $this->executeCommandWithText($_command, $_text, $_callback_query->getMessage(), true);
+        // So, we need to copy userId from the "callback_query->from" entity.
+        // A conversation will be started with the bot itself, if we don't change "message->from" value.
+        return $this->executeCommandWithText($_command, $_text,
+            $_callback_query->getMessage(), $_callback_query->getFrom());
     }
 
     /**
-     * @param string  $_command
-     * @param string  $_text
-     * @param Message $_message
-     * @param bool    $_is_copy_user_data_from_chat_object
+     * @param string    $_command
+     * @param string    $_text
+     * @param Message   $_message
+     * @param User|null $_from
      *
      * @return ServerResponse|null
      * @throws TelegramException
@@ -79,22 +82,21 @@ trait InlineMenuTelegramTrait
         string $_command,
         string $_text,
         Message $_message,
-        bool $_is_copy_user_data_from_chat_object = false
+        ?User $_from = null
     ): ?ServerResponse {
         /** @var Update $update */
         $update = $this->update;
         $rawUpdate = json_decode($update->toJson(), true);
         if (($jsonError = json_last_error()) !== JSON_ERROR_NONE) {
             $this->getInlineMenuLogger()->error('Update json decoding error: "' . $jsonError . '"');
+            $this->getInlineMenuLogger()->debug('Update raw data', $rawUpdate);
         }
 
         $rawUpdate['message'] = $_message->getRawData();
         $rawUpdate['message']['text'] = $_text;
 
-        // In a callback_query "message->from" entity will have the bot itself data,
-        // so the conversation will be started with the bot itself, if we don't change "message->from" value.
-        if ($_is_copy_user_data_from_chat_object) {
-            $rawUpdate['message']['from'] = $rawUpdate['message']['chat'];
+        if ($_from !== null) {
+            $rawUpdate['message']['from'] = $_from->getRawData();
         }
 
         return $this->executeCommandWithUpdate($_command, $rawUpdate);
